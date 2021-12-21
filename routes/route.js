@@ -10,13 +10,13 @@ app.use(express.urlencoded({ extended: true }));
  
 // Set EJS as templating engine
 app.set('view engine', 'ejs');
-//hello
 
 
 
-app.get('/',controller.dashboard)
 
 app.get('/display',controller.displayData);  
+
+app.get('/',controller.dashboard)
 
 app.get('/join', controller.studentDetailDisplay)
 
