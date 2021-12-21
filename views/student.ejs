@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+     @import url("https://fonts.googleapis.com/css2?family=Lilita+One&family=Montserrat+Alternates:wght@500;600;900&family=Montserrat:wght@500&family=Open+Sans&display=swap");
+body {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 500;
+  background-color: #ff9e80;
+}
+h1 {
+  color: #f50057;
+  text-decoration: overline;
+  text-decoration-color: #7b1fa2;
+}
+.container {
+  padding: 50px;
+  outline: 1px solid #c51162;
+}
+
+input[type="text"],
+input[type="password"],
+textarea {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+  outline: none;
+  font-family: "Open Sans", sans-serif;
+}
+input[type="text"]:focus,
+input[type="password"]:focus {
+  background-color: #fce4ec;
+  outline: 2px solid #8e24aa;
+  font-family: "Lilita One", cursive;
+}
+textarea:focus {
+  outline: none;
+  background-color: #fce4ec;
+  outline: 2px solid #8e24aa;
+  font-family: "Lilita One", cursive;
+}
+div {
+  padding: 10px 0;
+}
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+.registerbtn {
+  background-color: #2196f3;
+  color: white;
+  font-size: 20px;
+  font-family: "Montserrat", sans-serif;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+  transition: 0.5s;
+}
+.registerbtn:hover {
+  opacity: 1;
+  background-color: #1e88e5;
+}
+select {
+  outline: none;
+  padding: 5px 20px;
+  font-size: 14px;
+  width: 79pc;
+  height: 3pc;
+  color: grey;
+}
+option {
+  color: black;
+  font-size: 17px;
+  font-family: "Montserrat Alternates", sans-serif;
+}
+
+
+    </style>
+</head>
+<body>
+    
+    <form action="/create" method="post">
+        <div class="container">
+          <center>
+            <h1> Student Registeration Form</h1>
+          </center>
+          <hr>
+          <label><b>name</b></label>
+          <input type="text" name="uname" placeholder="Firstname" required>
+          <label for="email"><b>Email</b></label>
+              <input type="text" placeholder="Enter Email" name="email" required>
+    
+              <label>
+                <b>Phone :</b>
+              </label>
+              <input type="text" name="phone" placeholder="phone" size="10" / required>
+              <b>city :<b>
+                <input type="text" name="city" placeholder="city" required>
+          <div>
+            <label>
+              <b>Course :</b>
+            </label>
+         
+            <select name='course' >
+              <option value="">Select Course</option>
+              <% for (var i =1; i <=data.length;  i++ ) { %>
+             <option value="<%= data[i-1].cs_id %>"><%= data[i-1].cs_name %></option>
+                <% } %>
+        
+            </select>
+</div>
+<div>
+  <label>
+    <b>Sports :</b>
+  </label>
+            <select name='sports'>
+              <option value="">Select sports</option>
+              <% for (var i =1; i <=data2.length;  i++ ) { %>
+             <option value="<%= data2[i-1].sp_id %>"><%= data2[i-1].sp_name %></option>
+                <% } %>
+        
+            </select>
+          </div>
+              <button type="submit" class="registerbtn">Register Now!</button>
+      </form>
+
+</body>
+</html>
+
+
