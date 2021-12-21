@@ -117,7 +117,8 @@ WHERE student.st_id='${req.body.stid}'`
     
         })
       
-        // res.end()
+          res.redirect('/')
+        res.end()
     });  
 
   },
