@@ -13,16 +13,8 @@ studentFormData:  ()=>{
         if (err) {
             return reject(err);
         }
-       resolve(result,result2);
-       console.log(result2)
-     
-    //   res.render('student',{data:result,data2:result2})
-    //     res.end();
-    //     console.log('working')
-    // console.log(data)
-
-        })
-    
+     resolve([result,result2]);
+        })    
     });  
 })
  
@@ -35,14 +27,13 @@ displayData : () =>{
                 return reject(err);
             }
            resolve(result);
-        //    console.log(result)
         });
     });
 
 },
 
 
-    insertStudentQuery : function(req, res) { 
+insertStudentQuery : function(req) { 
         return new Promise((resolve, reject)=>{
     // store all the user input data
     const userDetails = {
@@ -51,21 +42,16 @@ displayData : () =>{
         city : req.body.city,
        phone : req.body.phone,
     //    course_id : req.body.course,
-       sports_id : req.body.sports
-       
+       sports_id : req.body.sports    
     }
     let course_id = ''
     for(let i =0;i< req.body.course.length;i++){
-       course_id += req.body.course[i] + " "
-     
+       course_id += req.body.course[i] + " "  
     }
-    console.log(course_id)
-    // console.log(req.body);
     // insert user data into student table
     var sql = "INSERT INTO student (uname,phone,email,city) VALUES (?, ?, ?, ?)";
     con.query(sql,[userDetails.name ,userDetails.phone,userDetails.email,userDetails.city],function (err, data) { 
-        con.query(`INSERT INTO student_course_map (st_id,cs_id) VALUES (?,?)` ,[data.insertId,course_id], function (err, result) {  
-    
+        con.query(`INSERT INTO student_course_map (st_id,cs_id) VALUES (?,?)` ,[data.insertId,course_id], function (err, result) {   
         })
         con.query(`INSERT INTO student_sport_map (st_id,sp_id) VALUES (?,?)` ,[data.insertId,userDetails.sports_id], function (err, result) {  
             if(err){
@@ -76,17 +62,13 @@ displayData : () =>{
         // console.log(data)
     });
 })
-//    res.redirect('/display');  // redirect to user form page after inserting the data
   },
 
-  byEmailFetchquery :  (req) => { 
+byEmailFetchquery :  (req) => { 
     return new Promise((resolve, reject)=>{
     var sql = `SELECT * from student WHERE email = '${req.body.email}'`;
-    con.query(sql, function (err, result) {  
-     
+    con.query(sql, function (err, result) {      
     }); 
-
-
     let sql1 = `SELECT  student.st_id, student.uname ,student.phone,student.email,student.city,courses.cs_name,sports.sp_name, 
     GROUP_CONCAT(sports.sp_name) AS sports FROM student  
     JOIN student_course_map ON student_course_map.st_id = student.st_id
@@ -94,60 +76,49 @@ displayData : () =>{
     JOIN student_sport_map ON student_sport_map.st_id = student.st_id  
     JOIN sports ON student_sport_map.sp_id = sports.sp_id  WHERE student.email='${req.body.email}'`
     con.query(sql1, function (err, result) {  
-        console.log(result)
+        // console.log(result)
         if (err)  if(err){
             return reject(err);
         }
        resolve(result);
-        // res.render('info',{data:result})
-        // res.end()
     });  
 })
+},
 
+addSportsQuery :  function(req) {
+    return new Promise((resolve, reject)=>{
+    const userDetails = {
+       sports_id : req.body.sports      
+    } 
+    var sql = `SELECT * from student WHERE st_id = '${req.body.stid}'`;
+    con.query(sql, function (err, result) {  
+        // if (err) throw err;  
+    }); 
+   let sql1 = `SELECT  student.st_id FROM student  
+            WHERE student.st_id='${req.body.stid}'`
+    con.query(sql1, function (err, result) {  
+    con.query(`INSERT INTO student_sport_map (st_id,sp_id) VALUES (?,?)` ,[req.body.stid,userDetails.sports_id], function (err, result) {  
+            if(err){
+                return reject(err);
+            }
+           resolve(result);
+           console.log('this###' + result)
+        })
+    });  
+    })
   },
 
-// addSportsQuery :  function(req, res) {
-//     const userDetails = {
-//     //   stid: req.body.stid,
-//        sports_id : req.body.sports
-       
-//     } 
-//     var sql = `SELECT * from student WHERE st_id = '${req.body.stid}'`;
-//     con.query(sql, function (err, result) {  
-//         if (err) throw err;  
-//         console.log(result)
-//         // res.render('info',{data:result})
-//         // res.end()
-    
-//     }); 
- 
-//    let sql1 = `SELECT  student.st_id FROM student  
-// WHERE student.st_id='${req.body.stid}'`
-//     con.query(sql1, function (err, result) {  
-//         // console.log(result)
-//         if (err) throw err;  
-//         con.query(`INSERT INTO student_sport_map (st_id,sp_id) VALUES (?,?)` ,[req.body.stid,userDetails.sports_id], function (err, result) {  
-    
-//         })
-//       res.redirect('/')
-//         res.end()
-//     });  
-
-//   },
-addSports : (req,res)=>{
+addSports : ()=>{
     return new Promise((resolve, reject)=>{
     let sql= "SELECT * FROM sports"
     con.query(sql, function (err, result) {  
         if(err){
             return reject(err);
         }
-       resolve(result);
-    
-// console.log(result)
-      
+       resolve(result);   
+// console.log(result)     
     });  
 })
-
 }
 
 

@@ -23,12 +23,12 @@ app.get('/join', controller.studentEmailDisplay)
 
 
 // //for insert student detail in table
-// app.post('/create',controller.insertStudent); 
+app.post('/create',(req,res)=>controller.insertStudentQuery(req,res)); 
 // //fetch data by using email
 app.post('/submit',(req,res)=>controller.byEmailFetchquery(req,res)); 
  
 app.get('/addsports',(req,res)=> controller.addSports(res)); 
 
-// app.post('/sportssubmit',controller.addSportsQuery)
+app.post('/sportssubmit',(req,res)=>controller.addSportsQuery(req,res))
 
   module.exports = app;

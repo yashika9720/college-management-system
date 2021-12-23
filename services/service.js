@@ -4,9 +4,8 @@ module.exports ={
 
    studentFormDataService :(data)=>{
     return new Promise(function(resolve, reject){
-        dao.studentFormData(data).then( (result,result2)=>{
-            console.log('ds' + result2)
-          resolve(result,result2);
+        dao.studentFormData(data).then( (data)=>{
+          resolve([data[0],data[1]]);
         })
     })
    },
@@ -17,7 +16,6 @@ DisplayFormDataService :()=> {
     return new Promise(function(resolve, reject){
    dao.displayData().then( (result,fields)=>{
      resolve(result);
-    //  console.log(result)
    });
  });
 },
@@ -26,10 +24,8 @@ addSportServices : () =>{
     return new Promise(function(resolve, reject){
         dao.addSports().then((result,fields)=>{
             resolve(result);
-           //  console.log(result)
           });
     })
-
 },
 
 emailQueryServices :(data) =>{
@@ -39,7 +35,24 @@ emailQueryServices :(data) =>{
            //  console.log(result)
           });
     })
+},
 
+insertStudentQueryService :(data) =>{
+    return new Promise(function(resolve, reject){
+        dao.insertStudentQuery(data).then((result,fields)=>{
+            resolve(result);
+           //  console.log(result)
+          });
+    })
+},
+
+addsportsQueryService :(data) =>{
+    return new Promise(function(resolve, reject){
+        dao.addSportsQuery(data).then((result,fields)=>{
+            resolve(result);
+           //  console.log(result)
+          });
+    })
 },
 
 }
